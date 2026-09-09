@@ -91,14 +91,26 @@ header.hata{
 .banner{display:flex;flex-direction:column;min-width:0}
 .banner .nm{
   font-family:var(--serif);font-weight:900;font-size:19px;letter-spacing:.16em;
-  line-height:1.35;color:var(--midori);
+  line-height:1.35;color:var(--midori);white-space:nowrap;
   padding:0 11px;border-left:1px solid var(--hair);border-right:1px solid var(--hair);
 }
 .banner .sub{
   font-family:var(--serif);font-weight:500;font-size:10.5px;letter-spacing:.2em;
   color:var(--sumi-dim);padding-left:11px;margin-top:1px;
 }
-.tabs{margin-left:auto;display:flex;border:1px solid var(--midori-pale)}
+.helpbtn{
+  margin-left:auto;display:flex;align-items:center;gap:5px;
+  min-height:34px;padding:6px 13px;font-size:12.5px;letter-spacing:.1em;
+  color:var(--midori);background:var(--panel);border:1px solid var(--midori-pale);
+  white-space:nowrap;transition:background .15s,border-color .15s;
+}
+.helpbtn .q{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:15px;height:15px;border:1px solid currentColor;border-radius:50%;
+  font-size:10px;line-height:1;font-family:var(--serif);font-weight:700;
+}
+.helpbtn:hover{background:var(--washi-2);border-color:var(--midori-mid)}
+.tabs{margin-left:9px;display:flex;border:1px solid var(--midori-pale)}
 .tabs button{
   padding:6px 15px;font-size:12.5px;font-weight:500;letter-spacing:.1em;
   color:var(--sumi-dim);background:var(--panel);white-space:nowrap;
@@ -109,9 +121,18 @@ header.hata{
 @media (max-width:620px){
   .hata-in{padding:10px 16px;gap:10px}
   .rakkan{width:30px;height:30px;font-size:14px}
-  .banner .nm{font-size:17px;letter-spacing:.12em;padding:0 9px}
+  .banner .nm{font-size:15.5px;letter-spacing:.04em;padding:0 8px}
   .banner .sub{display:none}
+  .helpbtn{min-width:36px;padding:6px;gap:0;justify-content:center}
+  .helpbtn .label{display:none}
+  .helpbtn .q{width:17px;height:17px;font-size:11px}
+  .tabs{margin-left:7px}
   .tabs button{padding:6px 11px;font-size:12px;letter-spacing:.06em}
+}
+@media (max-width:380px){
+  .hata-in{padding:10px 12px;gap:8px}
+  .banner .nm{font-size:14px;padding:0 7px}
+  .tabs button{padding:6px 9px;font-size:11.5px;letter-spacing:.02em}
 }
 
 .wrap{max-width:1080px;margin:0 auto;padding:0 22px 90px}
@@ -225,6 +246,11 @@ aside.mokuji{display:none}
 .musubi{margin-top:56px;padding-top:22px;border-top:1px solid var(--midori-pale);text-align:center}
 .musubi .l1{font-family:var(--serif);font-size:12px;letter-spacing:.24em;color:var(--shu)}
 .musubi .l2{font-size:11.5px;letter-spacing:.1em;color:var(--sumi-dim);margin-top:4px}
+.musubi button{
+  margin-top:14px;min-height:34px;padding:7px 16px;font-size:12.5px;letter-spacing:.1em;
+  color:var(--midori);background:var(--panel);border:1px solid var(--midori-pale);
+}
+.musubi button:hover{background:var(--washi-2);border-color:var(--midori-mid)}
 
 /* ---------- 詳細 ---------- */
 .scrim{position:fixed;inset:0;z-index:60;background:rgba(14,20,15,.55);display:flex;align-items:flex-end;justify-content:center;animation:fade .18s ease}
@@ -297,6 +323,22 @@ aside.mokuji{display:none}
 }
 .delbox .err{width:100%;font-size:12.5px;color:var(--shu);letter-spacing:.04em}
 
+.chui{
+  margin:16px 0;padding:13px 16px;
+  border:1px solid var(--shu);border-left-width:3px;background:var(--shu-soft);
+}
+.chui .h{
+  display:block;font-family:var(--serif);font-weight:700;font-size:14px;
+  letter-spacing:.08em;color:var(--shu);margin-bottom:5px;
+}
+.chui p{margin:0;font-size:13.5px;line-height:1.9}
+.tejun{margin:0 0 13px;padding-left:1.5em}
+.tejun li{margin-bottom:4px}
+.kbd{
+  display:inline-block;padding:1px 7px;font-size:12.5px;
+  background:var(--washi-2);border:1px solid var(--midori-pale);color:var(--midori);
+}
+
 /* ---------- 記帳（登録） ---------- */
 .form{max-width:680px;margin:26px auto 0;display:flex;flex-direction:column;gap:26px}
 .field{display:flex;flex-direction:column;gap:8px}
@@ -348,6 +390,7 @@ textarea.ctl{min-height:250px;line-height:1.95;resize:vertical;font-size:14.5px}
       <span class="nm">真戦 兵法帖</span>
       <span class="sub">信長の野望・真戦</span>
     </div>
+    <button class="helpbtn" id="helpBtn" type="button" aria-label="使い方"><span class="q" aria-hidden="true">?</span><span class="label">使い方</span></button>
     <div class="tabs" role="tablist" aria-label="表示切替">
       <button id="tabBrowse" role="tab" aria-selected="true">閲覧</button>
       <button id="tabAdd" role="tab" aria-selected="false">記帳</button>
@@ -385,6 +428,7 @@ textarea.ctl{min-height:250px;line-height:1.95;resize:vertical;font-size:14.5px}
         <div class="musubi">
           <p class="l1">兵 法 帖</p>
           <p class="l2" id="musubi2"></p>
+          <button id="helpBtn2" type="button">つかいかたを見る</button>
         </div>
       </main>
     </div>
@@ -808,10 +852,126 @@ function discordText(t) {
   return `ジャンル：${t.genre}\n\n### 【${bare(t.title)}】\n${t.body}\n${tags ? "\n" + tags : ""}`;
 }
 
+/* ================= 覆い（詳細・使い方の共通土台） =================
+   スマホでは、押したボタンの跡を追うように「幽霊タップ」がもう一度飛ぶことが
+   あります。開いた直後の覆いがそれを受け取ると、開いた瞬間に閉じてしまうので、
+   ・開いてすぐの数百ミリ秒は無視する
+   ・覆いの上で押し始めて、覆いの上で離したときだけ閉じる
+   の2段構えにしています。 */
+function mountPanel(scrim, sheet) {
+  const m = $("#modal");
+  scrim.appendChild(sheet);
+  m.innerHTML = ""; m.appendChild(scrim);
+  document.body.style.overflow = "hidden";
+
+  const onKey = e => { if (e.key === "Escape") close(); };
+  function close() {
+    m.innerHTML = "";
+    document.body.style.overflow = "";
+    document.removeEventListener("keydown", onKey);
+  }
+  document.addEventListener("keydown", onKey);
+
+  const openedAt = Date.now();
+  let downOnScrim = false;
+  ["pointerdown", "mousedown", "touchstart"].forEach(ev => {
+    scrim.addEventListener(ev, e => { downOnScrim = (e.target === scrim); }, { passive: true });
+  });
+  scrim.addEventListener("click", e => {
+    if (e.target !== scrim) return;
+    if (Date.now() - openedAt < 400) return;
+    if (!downOnScrim) return;
+    close();
+  });
+
+  const x = sheet.querySelector(".x");
+  if (x) x.onclick = close;
+  return close;
+}
+
+/* ================= 使い方 ================= */
+function openPanel(label, bodyHtml) {
+  const scrim = el("div", "scrim");
+  const sheet = el("div", "sheet");
+  sheet.setAttribute("role", "dialog");
+  sheet.setAttribute("aria-modal", "true");
+  sheet.innerHTML =
+    `<div class="sheet-top"><span class="gn">${esc(label)}</span><button class="x" aria-label="閉じる">×</button></div>` +
+    `<div class="sheet-body">${bodyHtml}</div>`;
+  const close = mountPanel(scrim, sheet);
+  return { sheet, close };
+}
+
+const HELP_HTML = `
+<h1>【兵法帖のつかいかた】</h1>
+<div class="doc">
+
+<p>隊で見つけた仕様・小ネタ・立ち回りを、みんなで書き溜めていく帖です。
+ログインは要りません。リンクを開けばそのまま読めますし、誰でも書き足せます。</p>
+
+<h3>探す</h3>
+<ul>
+<li>上の検索欄に言葉を入れると、表題・本文・タグをまとめて探します（例：身代金／迎撃／士気）</li>
+<li>ジャンルの札を押すと、そのジャンルだけに絞れます</li>
+<li>「よく使われる語」のタグを押しても絞れます</li>
+<li>何も入れていないときは、ジャンルごとに並びます</li>
+<li>絞り込みを消すときは、検索欄の右にある <span class="kbd">×</span></li>
+</ul>
+
+<h3>読む・持ち出す</h3>
+<ul>
+<li>札を押すと全文が開きます</li>
+<li><span class="kbd">Discord用にコピー</span> …… そのままDiscordに貼れる形でコピーされます</li>
+<li><span class="kbd">Markdownで保存</span> …… ファイルとして手元に残せます</li>
+<li><span class="kbd">表示中を一括コピー</span> …… 絞り込んだ分をまとめて貼り出せます</li>
+</ul>
+
+<h3>書く（記帳）</h3>
+<ol class="tejun">
+<li>右上の <span class="kbd">記帳</span> を押す</li>
+<li>ジャンルを選ぶ（無ければ「＋新しいジャンル」で足せます）</li>
+<li>表題を書く ── 何の話かがひと目で分かるように</li>
+<li>本文を書く</li>
+<li>ハッシュタグは本文から自動で付きます。要らないものは <span class="kbd">×</span>、足したいものは「＋タグを追加」に打って Enter</li>
+<li>画像は最大4枚まで。重い画像は自動で軽くなります</li>
+<li>記帳者に名前を入れておくと、次回から覚えています</li>
+<li><span class="kbd">帖に記す</span> で保存</li>
+</ol>
+
+<h3>本文の書き方</h3>
+<ul>
+<li><strong>### </strong> で始めた行は小見出しになります</li>
+<li><strong>・</strong> または <strong>- </strong> で始めた行は箇条書きになります</li>
+<li><strong>**〜**</strong> で囲むと強調されます</li>
+<li>空行を入れると段落が分かれます</li>
+</ul>
+<p>書きながら下に仕上がりが出ます。整っていなくても大丈夫です、あとで直せます。</p>
+
+<h3>直す</h3>
+<p>自分が書いたものも、他の人が書いたものも、開いて <span class="kbd">編集</span> から直せます。
+誤字直し・追記・書き足しは気軽にどうぞ。</p>
+
+<div class="chui">
+<span class="h">消すときは幹部へ</span>
+<p>削除にはパスコードが要ります。<strong>消したい項目を見つけたら、自分で消さずに幹部まで連絡してください。</strong><br>
+内容が古くなっただけなら、消すより <span class="kbd">編集</span> で書き直してもらえると助かります。</p>
+</div>
+
+<h3>そのほか</h3>
+<ul>
+<li>他の人が書いた分は自動では出てきません。<span class="kbd">更新</span> を押すと最新になります</li>
+<li>スマホでもPCでも同じように使えます</li>
+<li>「たぶんこうだと思う」も、そう書いて構いません。あとで誰かが確かめます</li>
+<li>地名や部隊名は、隊の中で通じる呼び方のままで大丈夫です</li>
+</ul>
+
+</div>`;
+
+function openHelp() { openPanel("つかいかた", HELP_HTML); }
+
 function openSheet(id) {
   const t = state.tips.find(x => x.id === id);
   if (!t) return;
-  const m = $("#modal");
   const scrim = el("div", "scrim");
   const sheet = el("div", "sheet");
   sheet.setAttribute("role", "dialog");
@@ -838,15 +998,7 @@ function openSheet(id) {
         `<span class="err" hidden>パスコードが違います</span>` +
       `</div>` +
     `</div>`;
-  scrim.appendChild(sheet);
-  m.innerHTML = ""; m.appendChild(scrim);
-  document.body.style.overflow = "hidden";
-
-  const close = () => { m.innerHTML = ""; document.body.style.overflow = ""; document.removeEventListener("keydown", onKey); };
-  const onKey = e => { if (e.key === "Escape") close(); };
-  document.addEventListener("keydown", onKey);
-  scrim.addEventListener("click", e => { if (e.target === scrim) close(); });
-  sheet.querySelector(".x").onclick = close;
+  const close = mountPanel(scrim, sheet);
 
   const shots = sheet.querySelector(".shots");
   if ((t.images || []).length) {
@@ -1033,6 +1185,13 @@ function setTab(which) {
 }
 
 /* ================= 配線 ================= */
+/* 「使い方」はヘッダーと帖尻の2か所から。委譲で拾うので、
+   ほかの配線が転んでも必ず開きます。 */
+document.addEventListener("click", e => {
+  const t = e.target instanceof Element ? e.target.closest("#helpBtn, #helpBtn2") : null;
+  if (t) { e.preventDefault(); openHelp(); }
+});
+
 $("#tabBrowse").onclick = () => setTab("browse");
 $("#tabAdd").onclick = () => setTab("add");
 
@@ -1138,6 +1297,14 @@ function setNotice(html) { const n = $("#notice"); n.innerHTML = html; n.hidden 
 
 try { $("#fAuthor").value = localStorage.getItem("heihojo.author") || ""; } catch {}
 try { resetForm(); setTab("browse"); } catch (e) { console.error("boot", e); }
+
+/* はじめて開いた人には、一度だけ使い方を出します */
+try {
+  if (!localStorage.getItem("heihojo.seen")) {
+    localStorage.setItem("heihojo.seen", "1");
+    setTimeout(openHelp, 500);
+  }
+} catch {}
 
 (async () => {
   if (!GAS_URL) {
