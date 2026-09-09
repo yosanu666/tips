@@ -253,15 +253,20 @@ aside.mokuji{display:none}
 .musubi button:hover{background:var(--washi-2);border-color:var(--midori-mid)}
 
 /* ---------- 詳細 ---------- */
-.scrim{position:fixed;inset:0;z-index:60;background:rgba(14,20,15,.55);display:flex;align-items:flex-end;justify-content:center;animation:fade .18s ease}
-@media (min-width:760px){.scrim{align-items:center;padding:30px}}
+.scrim{
+  position:fixed;inset:0;z-index:60;background:rgba(14,20,15,.55);
+  display:flex;align-items:flex-end;justify-content:center;
+  padding-top:calc(60px + env(safe-area-inset-top,0px));
+  animation:fade .18s ease;
+}
+@media (min-width:760px){.scrim{align-items:center;padding:34px 30px}}
 @keyframes fade{from{opacity:0}to{opacity:1}}
 .sheet{
-  background:var(--washi);width:100%;max-width:700px;max-height:93vh;overflow-y:auto;
+  background:var(--washi);width:100%;max-width:700px;
+  max-height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;
   border:1px solid var(--midori-pale);border-top:3px solid var(--midori);
   animation:rise .2s cubic-bezier(.2,.7,.3,1);
 }
-@media (min-width:760px){.sheet{max-height:86vh}}
 @keyframes rise{from{transform:translateY(16px)}to{transform:none}}
 @media (prefers-reduced-motion:reduce){.scrim,.sheet{animation:none}.fuda:hover{background:var(--panel)}}
 .sheet-top{
@@ -270,7 +275,13 @@ aside.mokuji{display:none}
   display:flex;align-items:center;gap:11px;
 }
 .sheet-top .gn{font-size:11px;letter-spacing:.18em;color:var(--midori)}
-.sheet-top .x{margin-left:auto;font-size:19px;color:var(--sumi-dim);padding:0 6px;line-height:1}
+.sheet-top .x{
+  margin-left:auto;display:flex;align-items:center;justify-content:center;
+  min-width:40px;min-height:40px;margin-right:-8px;
+  font-size:20px;line-height:1;color:var(--sumi-dim);
+  border:1px solid transparent;
+}
+.sheet-top .x:hover{color:var(--midori);border-color:var(--midori-pale)}
 .sheet-body{padding:20px 22px 28px}
 .sheet-body h1{
   font-family:var(--serif);font-weight:700;font-size:21px;letter-spacing:.05em;
@@ -352,10 +363,14 @@ aside.mokuji{display:none}
 .ctl:focus{border-color:var(--midori);outline:none}
 textarea.ctl{min-height:250px;line-height:1.95;resize:vertical;font-size:14.5px}
 .genre-picks{display:flex;flex-wrap:wrap;gap:6px}
+.addrow{display:flex;gap:8px;align-items:stretch;flex-wrap:wrap}
 .tagadd{
-  width:170px;padding:6px 11px;font-size:12.5px;letter-spacing:.04em;
-  border:1px dashed var(--midori-pale);background:transparent;color:var(--sumi);
+  flex:1 1 150px;max-width:230px;min-height:36px;padding:7px 11px;
+  font-size:14px;letter-spacing:.04em;
+  border:1px dashed var(--midori-pale);background:var(--panel);color:var(--sumi);
 }
+.tagadd:focus{border-style:solid;border-color:var(--midori);outline:none}
+.btn.small{flex:none;min-height:36px;padding:6px 16px;font-size:12.5px;letter-spacing:.08em}
 .tagedit{display:flex;flex-wrap:wrap;gap:6px;align-items:center;min-height:30px}
 .tagedit .t{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;padding:2px 5px 2px 9px;background:var(--kin-soft);color:var(--kin)}
 .tagedit .t.auto{background:var(--washi-2);color:var(--midori)}
@@ -440,7 +455,10 @@ textarea.ctl{min-height:250px;line-height:1.95;resize:vertical;font-size:14.5px}
       <div class="field">
         <label>ジャンル</label>
         <div class="genre-picks" id="genrePicks"></div>
-        <input class="tagadd" id="fNewGenre" placeholder="＋ 新しいジャンル">
+        <div class="addrow">
+          <input class="tagadd" id="fNewGenre" placeholder="新しいジャンル" autocomplete="off">
+          <button class="btn small" type="button" id="fGenreAddBtn">追加</button>
+        </div>
       </div>
 
       <div class="field">
@@ -461,7 +479,10 @@ textarea.ctl{min-height:250px;line-height:1.95;resize:vertical;font-size:14.5px}
       <div class="field">
         <label>ハッシュタグ<span class="nm"> — 本文から自動で付きます</span></label>
         <div class="tagedit" id="tagEdit"></div>
-        <input class="tagadd" id="fTagAdd" placeholder="＋ タグを追加" autocomplete="off">
+        <div class="addrow">
+          <input class="tagadd" id="fTagAdd" placeholder="タグを追加" autocomplete="off">
+          <button class="btn small" type="button" id="fTagAddBtn">追加</button>
+        </div>
       </div>
 
       <div class="field">
@@ -929,10 +950,10 @@ const HELP_HTML = `
 <h3>書く（記帳）</h3>
 <ol class="tejun">
 <li>右上の <span class="kbd">記帳</span> を押す</li>
-<li>ジャンルを選ぶ（無ければ「＋新しいジャンル」で足せます）</li>
+<li>ジャンルを選ぶ（無ければ「新しいジャンル」に打って <span class="kbd">追加</span>）</li>
 <li>表題を書く ── 何の話かがひと目で分かるように</li>
 <li>本文を書く</li>
-<li>ハッシュタグは本文から自動で付きます。要らないものは <span class="kbd">×</span>、足したいものは「＋タグを追加」に打って Enter</li>
+<li>ハッシュタグは本文から自動で付きます。要らないものは <span class="kbd">×</span>、足したいものは「タグを追加」に打って <span class="kbd">追加</span></li>
 <li>画像は最大4枚まで。重い画像は自動で軽くなります</li>
 <li>記帳者に名前を入れておくと、次回から覚えています</li>
 <li><span class="kbd">帖に記す</span> で保存</li>
@@ -1200,21 +1221,39 @@ $("#qclr").onclick = () => { state.q = ""; $("#q").value = ""; state.genre = nul
 
 $("#fTitle").addEventListener("input", refreshTags);
 $("#fBody").addEventListener("input", refreshTags);
+/* 変換中のEnter（日本語入力の確定）は拾いません */
+const isEnter = e => e.key === "Enter" && !e.isComposing && e.keyCode !== 229;
+
+function addTagFromInput() {
+  const inp = $("#fTagAdd");
+  const v = inp.value.trim().replace(/^[#＃]/, "");
+  inp.value = "";
+  if (!v) return;
+  state.form.removedAuto.delete(v);
+  if (!state.form.manual.includes(v)) state.form.manual.push(v);
+  refreshTags();
+}
+$("#fTagAddBtn").onclick = () => { addTagFromInput(); $("#fTagAdd").focus(); };
+$("#fTagAdd").addEventListener("change", addTagFromInput);   // 入力後によそを触ったときも確定
 $("#fTagAdd").addEventListener("keydown", e => {
-  if (e.key !== "Enter") return;
-  e.preventDefault();
-  const v = e.target.value.trim().replace(/^#/, "");
-  if (v && !state.form.manual.includes(v)) state.form.manual.push(v);
-  e.target.value = ""; refreshTags();
+  if (e.key === "Enter") e.preventDefault();                 // 記帳ボタンが押されるのを防ぎます
+  if (isEnter(e)) addTagFromInput();
 });
-$("#fNewGenre").addEventListener("keydown", async e => {
-  if (e.key !== "Enter") return;
-  e.preventDefault();
-  const v = e.target.value.trim();
+
+async function addGenreFromInput() {
+  const inp = $("#fNewGenre");
+  const v = inp.value.trim();
+  inp.value = "";
   if (!v) return;
   if (!state.genres.includes(v)) { state.genres.push(v); await store.saveGenres(state.genres); }
   $("#genrePicks").dataset.value = v;
-  e.target.value = ""; renderGenrePicks(); refreshTags(); renderChips();
+  renderGenrePicks(); refreshTags(); renderChips();
+}
+$("#fGenreAddBtn").onclick = () => addGenreFromInput();
+$("#fNewGenre").addEventListener("change", () => addGenreFromInput());
+$("#fNewGenre").addEventListener("keydown", e => {
+  if (e.key === "Enter") e.preventDefault();
+  if (isEnter(e)) addGenreFromInput();
 });
 
 $("#fImg").addEventListener("change", async e => {
@@ -1231,6 +1270,11 @@ $("#fImg").addEventListener("change", async e => {
   msg.textContent = bad ? "読み込めない画像がありました" : "";
   msg.className = bad ? "msg err" : "msg";
   renderThumbs();
+});
+
+/* 1行入力でのEnterが、うっかり記帳を確定させないように */
+$("#form").addEventListener("keydown", e => {
+  if (e.key === "Enter" && e.target && e.target.tagName === "INPUT") e.preventDefault();
 });
 
 $("#fReset").onclick = () => resetForm();
