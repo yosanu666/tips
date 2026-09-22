@@ -6,392 +6,349 @@
 <title>真戦 兵法帖</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;700;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Serif+JP:wght@600;700&display=swap">
 <style>
 :root{
-  --washi:#F3F6F0;
-  --washi-2:#E6EDE2;
-  --panel:#FAFCF8;
-  --midori:#1B4D33;
-  --midori-mid:#356B49;
-  --midori-pale:#C4D8C7;
-  --hair:rgba(27,77,51,.30);
-  --sumi:#1C231D;
-  --sumi-dim:#55604F;
-  --shu:#A2372A;
-  --shu-soft:#F5E8E5;
-  --kin:#7A5F1C;
-  --kin-soft:#F1ECDD;
-  --on-midori:#F3F6F0;
-  --texture:rgba(27,77,51,.035);
+  --bg:      #F7F3E9;
+  --surface: #FFFDF7;
+  --ink:     #2B2A26;
+  --ink-sub: #6B655A;
+  --green:   #1F3A2E;
+  --green-2: #2C4A3B;
+  --accent:  #8B3A2F;
+  --line:    #D9D1BE;
+
   --serif:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
-  --sans:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --washi:#131711;
-    --washi-2:#1E2419;
-    --panel:#1A1F17;
-    --midori:#9DC4A8;
-    --midori-mid:#7FA98C;
-    --midori-pale:#31402F;
-    --hair:rgba(157,196,168,.28);
-    --sumi:#E4EAE0;
-    --sumi-dim:#96A392;
-    --shu:#DB8375;
-    --shu-soft:#2C1C19;
-    --kin:#CBA757;
-    --kin-soft:#282212;
-    --on-midori:#10140E;
-    --texture:rgba(157,196,168,.045);
-  }
-}
-:root[data-theme="dark"]{
-  --washi:#131711;
-  --washi-2:#1E2419;
-  --panel:#1A1F17;
-  --midori:#9DC4A8;
-  --midori-mid:#7FA98C;
-  --midori-pale:#31402F;
-  --hair:rgba(157,196,168,.28);
-  --sumi:#E4EAE0;
-  --sumi-dim:#96A392;
-  --shu:#DB8375;
-  --shu-soft:#2C1C19;
-  --kin:#CBA757;
-  --kin-soft:#282212;
-  --on-midori:#10140E;
-  --texture:rgba(157,196,168,.045);
+  --sans:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  --r:6px;
 }
 
 *{box-sizing:border-box}
+[hidden]{display:none !important}
+
 body{
-  margin:0;background:var(--washi);color:var(--sumi);
-  font-family:var(--sans);font-size:15px;line-height:1.9;
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--sans);font-size:16px;font-weight:400;line-height:1.8;
   -webkit-font-smoothing:antialiased;
 }
 button,input,select,textarea{font:inherit;color:inherit}
-button{cursor:pointer;background:none;border:none;border-radius:0}
-input,textarea,select{border-radius:0}
-:focus-visible{outline:1.5px solid var(--midori);outline-offset:2px}
-h1,h2,h3{text-wrap:balance;margin:0}
+button{cursor:pointer;background:none;border:none;border-radius:var(--r)}
+input,textarea{border-radius:var(--r)}
+:focus-visible{outline:2px solid var(--green-2);outline-offset:2px}
+h1,h2,h3{margin:0;font-family:var(--serif);font-weight:700;text-wrap:balance}
+p{margin:0}
 
-/* ---------- 旗（ヘッダー） ---------- */
+/* ============ ヘッダー ============ */
 header.hata{
   position:sticky;top:0;z-index:40;
-  background:repeating-linear-gradient(180deg, var(--texture) 0 2px, transparent 2px 5px), var(--panel);
-  border-bottom:2px solid var(--midori);
+  background:var(--green);border-bottom:1px solid var(--green-2);
 }
-.hata-in{max-width:1080px;margin:0 auto;padding:11px 22px;display:flex;align-items:center;gap:14px}
+.hata-in{
+  max-width:720px;margin:0 auto;padding:12px 20px;
+  display:flex;align-items:center;gap:12px;
+}
 .rakkan{
-  flex:none;width:34px;height:34px;border:2px solid var(--shu);border-radius:3px;
+  flex:none;width:34px;height:34px;border:1px solid var(--bg);border-radius:4px;
   display:flex;align-items:center;justify-content:center;
-  color:var(--shu);font-family:var(--serif);font-weight:700;font-size:16px;line-height:1;
+  font-family:var(--serif);font-weight:700;font-size:16px;line-height:1;color:var(--bg);
 }
 .banner{display:flex;flex-direction:column;min-width:0}
 .banner .nm{
-  font-family:var(--serif);font-weight:900;font-size:19px;letter-spacing:.16em;
-  line-height:1.35;color:var(--midori);white-space:nowrap;
-  padding:0 11px;border-left:1px solid var(--hair);border-right:1px solid var(--hair);
+  font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.12em;
+  line-height:1.4;color:var(--bg);white-space:nowrap;
 }
-.banner .sub{
-  font-family:var(--serif);font-weight:500;font-size:10.5px;letter-spacing:.2em;
-  color:var(--sumi-dim);padding-left:11px;margin-top:1px;
-}
+.banner .sub{font-size:11px;letter-spacing:.16em;color:var(--line);margin-top:1px}
+
 .helpbtn{
-  margin-left:auto;display:flex;align-items:center;gap:5px;
-  min-height:34px;padding:6px 13px;font-size:12.5px;letter-spacing:.1em;
-  color:var(--midori);background:var(--panel);border:1px solid var(--midori-pale);
-  white-space:nowrap;transition:background .15s,border-color .15s;
+  margin-left:auto;display:flex;align-items:center;gap:6px;
+  min-height:34px;padding:6px 13px;border-radius:var(--r);
+  font-size:13px;letter-spacing:.08em;color:var(--bg);
+  border:1px solid var(--line);background:transparent;
 }
 .helpbtn .q{
   display:inline-flex;align-items:center;justify-content:center;
-  width:15px;height:15px;border:1px solid currentColor;border-radius:50%;
-  font-size:10px;line-height:1;font-family:var(--serif);font-weight:700;
+  width:16px;height:16px;border:1px solid currentColor;border-radius:50%;
+  font-family:var(--serif);font-weight:700;font-size:10px;line-height:1;
 }
-.helpbtn:hover{background:var(--washi-2);border-color:var(--midori-mid)}
-.tabs{margin-left:9px;display:flex;border:1px solid var(--midori-pale)}
+.tabs{margin-left:10px;display:flex;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
 .tabs button{
-  padding:6px 15px;font-size:12.5px;font-weight:500;letter-spacing:.1em;
-  color:var(--sumi-dim);background:var(--panel);white-space:nowrap;
-  transition:background .16s,color .16s;
+  padding:6px 15px;border-radius:0;font-size:13px;letter-spacing:.08em;
+  color:var(--line);background:transparent;white-space:nowrap;
 }
-.tabs button + button{border-left:1px solid var(--midori-pale)}
-.tabs button[aria-selected="true"]{background:var(--midori);color:var(--on-midori)}
-@media (max-width:620px){
+.tabs button + button{border-left:1px solid var(--line)}
+.tabs button[aria-selected="true"]{background:var(--bg);color:var(--green);font-weight:700}
+
+@media (max-width:600px){
   .hata-in{padding:10px 16px;gap:10px}
   .rakkan{width:30px;height:30px;font-size:14px}
-  .banner .nm{font-size:15.5px;letter-spacing:.04em;padding:0 8px}
+  .banner .nm{font-size:16px;letter-spacing:.06em}
   .banner .sub{display:none}
   .helpbtn{min-width:36px;padding:6px;gap:0;justify-content:center}
   .helpbtn .label{display:none}
-  .helpbtn .q{width:17px;height:17px;font-size:11px}
-  .tabs{margin-left:7px}
-  .tabs button{padding:6px 11px;font-size:12px;letter-spacing:.06em}
+  .tabs{margin-left:8px}
+  .tabs button{padding:6px 12px}
 }
 @media (max-width:380px){
-  .hata-in{padding:10px 12px;gap:8px}
-  .banner .nm{font-size:14px;padding:0 7px}
-  .tabs button{padding:6px 9px;font-size:11.5px;letter-spacing:.02em}
+  .hata-in{padding:10px 14px;gap:8px}
+  .banner .nm{font-size:14.5px}
+  .tabs button{padding:6px 10px;font-size:12px}
 }
 
-.wrap{max-width:1080px;margin:0 auto;padding:0 22px 90px}
-@media (max-width:620px){.wrap{padding:0 16px 90px}}
+/* ============ 器 ============ */
+.wrap{max-width:720px;margin:0 auto;padding:0 20px 96px}
+@media (max-width:600px){.wrap{padding:0 16px 96px}}
 
 .shirase{
-  margin-top:20px;padding:11px 14px;
-  border:1px solid var(--midori-pale);border-left:3px solid var(--shu);background:var(--panel);
-  font-size:12.5px;line-height:1.8;color:var(--sumi-dim);
+  margin-top:24px;padding:14px 16px;border-radius:var(--r);
+  border:1px solid var(--line);border-left:3px solid var(--accent);background:var(--surface);
+  font-size:14px;line-height:1.8;color:var(--ink-sub);
 }
-.shirase b{display:block;color:var(--midori);font-family:var(--serif);letter-spacing:.06em}
+.shirase b{display:block;font-family:var(--serif);color:var(--green);letter-spacing:.04em}
 
-/* ---------- 検索 ---------- */
-.sagasu{position:relative;margin-top:24px}
+/* ============ 検索 ============ */
+.sagasu{position:relative;margin-top:32px}
 .sagasu input{
-  width:100%;padding:13px 42px 13px 40px;
-  border:1px solid var(--midori-pale);background:var(--panel);
-  font-size:16px;letter-spacing:.03em;
+  width:100%;padding:14px 44px 14px 44px;
+  border:1px solid var(--line);background:var(--surface);
+  font-size:16px;letter-spacing:.02em;
 }
-.sagasu input:focus{border-color:var(--midori);outline:none}
-.sagasu input::placeholder{color:var(--sumi-dim);opacity:.75}
-.sagasu .mag{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--midori-mid);pointer-events:none}
-.sagasu .clr{position:absolute;right:6px;top:50%;transform:translateY(-50%);padding:6px 10px;color:var(--sumi-dim);font-size:17px;line-height:1}
+.sagasu input:focus{border-color:var(--green-2);outline:none}
+.sagasu input::placeholder{color:var(--ink-sub)}
+.sagasu .mag{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--ink-sub);pointer-events:none}
+.sagasu .clr{
+  position:absolute;right:6px;top:50%;transform:translateY(-50%);
+  width:36px;height:36px;font-size:18px;line-height:1;color:var(--ink-sub);
+}
 
-.chiprow{display:flex;gap:6px;overflow-x:auto;padding:14px 0 4px;scrollbar-width:thin}
+.chiprow{display:flex;gap:8px;overflow-x:auto;padding:16px 0 4px;scrollbar-width:thin}
 .chiprow::-webkit-scrollbar{height:4px}
-.chiprow::-webkit-scrollbar-thumb{background:var(--midori-pale)}
+.chiprow::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px}
 .gchip{
-  flex:none;padding:5px 13px;font-size:13px;letter-spacing:.04em;white-space:nowrap;
-  color:var(--midori);background:var(--panel);border:1px solid var(--midori-pale);
-  transition:background .15s,color .15s;
+  flex:none;padding:7px 14px;border-radius:var(--r);font-size:14px;letter-spacing:.02em;
+  white-space:nowrap;color:var(--green);background:var(--surface);border:1px solid var(--line);
 }
-.gchip .n{font-size:11px;margin-left:7px;opacity:.65;font-variant-numeric:tabular-nums}
-.gchip[aria-pressed="true"]{background:var(--midori);border-color:var(--midori);color:var(--on-midori)}
+.gchip .n{font-size:12px;margin-left:7px;color:var(--ink-sub);font-variant-numeric:tabular-nums}
+.gchip[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:var(--bg);font-weight:700}
+.gchip[aria-pressed="true"] .n{color:var(--line)}
 
-.tagline{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:10px 0 2px}
-.tagline .lbl{font-size:10.5px;letter-spacing:.2em;color:var(--sumi-dim);margin-right:4px}
+.tagline{display:flex;flex-wrap:wrap;gap:7px;align-items:center;padding:12px 0 0}
+.tagline .lbl{font-size:12px;letter-spacing:.14em;color:var(--ink-sub);margin-right:4px}
 .tag{
-  font-size:12px;padding:2px 8px;letter-spacing:.02em;white-space:nowrap;
-  color:var(--kin);background:var(--kin-soft);border:1px solid transparent;
+  font-size:13px;padding:3px 9px;border-radius:4px;white-space:nowrap;
+  color:var(--ink-sub);background:var(--surface);border:1px solid var(--line);
 }
-button.tag[aria-pressed="true"]{border-color:var(--kin)}
+button.tag[aria-pressed="true"]{border-color:var(--green);color:var(--green);font-weight:700}
 
 .kensuu{
-  display:flex;align-items:center;gap:12px;margin:26px 0 14px;
-  font-size:11px;letter-spacing:.2em;color:var(--sumi-dim);
+  display:flex;align-items:center;gap:12px;margin:32px 0 16px;
+  font-size:13px;letter-spacing:.14em;color:var(--ink-sub);
 }
-.kensuu b{font-family:var(--serif);font-size:15px;font-weight:700;color:var(--midori);letter-spacing:.06em;font-variant-numeric:tabular-nums}
-.kensuu .rule{flex:1;height:1px;background:var(--midori-pale)}
-.kensuu .mini{padding:4px 11px;font-size:11.5px;letter-spacing:.08em;border:1px solid var(--midori-pale);background:var(--panel);color:var(--midori)}
-
-/* ---------- 段組 ---------- */
-.cols{display:block}
-aside.mokuji{display:none}
-@media (min-width:960px){
-  .cols{display:grid;grid-template-columns:196px minmax(0,1fr);gap:44px;align-items:start;margin-top:22px}
-  aside.mokuji{display:block;position:sticky;top:96px}
-  .mokuji h2{font-size:10.5px;letter-spacing:.24em;color:var(--sumi-dim);font-family:var(--sans);font-weight:500;margin-bottom:14px}
-  .mokuji-list{border-left:1px solid var(--midori-pale);padding-left:20px;display:flex;flex-direction:column}
-  .mokuji-list button{
-    position:relative;display:flex;align-items:baseline;gap:8px;text-align:left;
-    padding:5px 0;font-size:13.5px;letter-spacing:.04em;color:var(--sumi-dim);
-  }
-  .mokuji-list button::before{
-    content:"";position:absolute;left:-24px;top:14px;width:7px;height:7px;
-    background:var(--washi);border:1px solid var(--midori-mid);transform:rotate(45deg);
-  }
-  .mokuji-list button:hover{color:var(--sumi)}
-  .mokuji-list button[aria-pressed="true"]{color:var(--midori);font-weight:700}
-  .mokuji-list button[aria-pressed="true"]::before{background:var(--midori);border-color:var(--midori)}
-  .mokuji-list .n{margin-left:auto;font-size:11px;color:var(--sumi-dim);font-variant-numeric:tabular-nums;font-weight:400}
-  .kohaba{display:none !important}
-  main{max-width:680px}
+.kensuu b{font-family:var(--serif);font-size:17px;color:var(--green);letter-spacing:.04em;font-variant-numeric:tabular-nums}
+.kensuu .rule{flex:1;height:1px;background:var(--line)}
+.kensuu .mini{
+  padding:6px 13px;border-radius:var(--r);font-size:13px;letter-spacing:.06em;
+  border:1px solid var(--line);background:var(--surface);color:var(--green);
 }
 
-/* ---------- 章と札 ---------- */
-.gsec{margin-bottom:46px}
-.gsec-h{display:flex;align-items:center;gap:11px;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid var(--hair)}
-.gsec-h .dia{flex:none;width:7px;height:7px;background:var(--midori);transform:rotate(45deg)}
-.gsec-h h2{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.09em;color:var(--midori);line-height:1.4}
-.gsec-h .n{margin-left:auto;font-size:11px;letter-spacing:.16em;color:var(--sumi-dim);font-variant-numeric:tabular-nums}
+/* ============ 章と札 ============ */
+.gsec{margin-bottom:48px}
+.gsec-h{display:flex;align-items:baseline;gap:12px;margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.gsec-h h2{font-size:20px;letter-spacing:.1em;color:var(--green);line-height:1.5}
+.gsec-h .n{margin-left:auto;font-size:13px;letter-spacing:.12em;color:var(--ink-sub);font-variant-numeric:tabular-nums}
 
-.list{display:flex;flex-direction:column;gap:12px}
+.list{display:flex;flex-direction:column;gap:16px}
 .fuda{
   position:relative;display:block;width:100%;text-align:left;
-  background:var(--panel);
-  border:1px solid var(--midori-pale);border-top:2px solid var(--midori);
-  padding:14px 17px 13px;transition:background .16s;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  padding:18px 20px 16px;
 }
-.fuda:hover{background:var(--washi-2)}
-.fuda .k{display:flex;align-items:baseline;gap:10px;font-size:10.5px;letter-spacing:.16em;color:var(--midori)}
+.fuda .k{display:flex;align-items:baseline;gap:10px;font-size:12px;letter-spacing:.12em;color:var(--green-2)}
 .fuda .k > span:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.fuda .k .meta{margin-left:auto;flex:none;padding-left:8px;color:var(--sumi-dim);letter-spacing:.08em;font-variant-numeric:tabular-nums}
-.fuda h3{
-  font-family:var(--serif);font-weight:700;font-size:16.5px;letter-spacing:.04em;
-  line-height:1.7;color:var(--sumi);margin-top:3px;
-}
-.fuda p{
-  margin:5px 0 0;font-size:13px;line-height:1.85;color:var(--sumi-dim);
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
-}
-.fuda .tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
-.fuda .pic{position:absolute;right:14px;bottom:12px;font-size:10.5px;letter-spacing:.08em;color:var(--sumi-dim)}
+.fuda .k .meta{margin-left:auto;flex:none;padding-left:8px;color:var(--ink-sub);letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.fuda h3{font-size:18px;letter-spacing:.04em;line-height:1.65;color:var(--ink);margin-top:6px}
+.fuda p{margin:8px 0 0;font-size:14px;line-height:1.8;color:var(--ink-sub);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.fuda .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.fuda .pic{position:absolute;right:18px;bottom:16px;font-size:12px;letter-spacing:.06em;color:var(--ink-sub)}
 
 .karappo{
-  text-align:center;padding:56px 22px;color:var(--sumi-dim);font-size:13px;
-  border:1px solid var(--midori-pale);background:var(--panel);
+  text-align:center;padding:56px 24px;color:var(--ink-sub);font-size:14px;
+  border:1px solid var(--line);border-radius:var(--r);background:var(--surface);
 }
-.karappo b{display:block;font-family:var(--serif);font-size:17px;letter-spacing:.08em;color:var(--midori);margin-bottom:8px}
+.karappo b{display:block;font-family:var(--serif);font-size:18px;letter-spacing:.06em;color:var(--green);margin-bottom:8px}
 
-.musubi{margin-top:56px;padding-top:22px;border-top:1px solid var(--midori-pale);text-align:center}
-.musubi .l1{font-family:var(--serif);font-size:12px;letter-spacing:.24em;color:var(--shu)}
-.musubi .l2{font-size:11.5px;letter-spacing:.1em;color:var(--sumi-dim);margin-top:4px}
+.musubi{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);text-align:center}
+.musubi .l1{font-family:var(--serif);font-weight:700;font-size:14px;letter-spacing:.24em;color:var(--accent)}
+.musubi .l2{font-size:13px;letter-spacing:.08em;color:var(--ink-sub);margin-top:6px}
 .musubi button{
-  margin-top:14px;min-height:34px;padding:7px 16px;font-size:12.5px;letter-spacing:.1em;
-  color:var(--midori);background:var(--panel);border:1px solid var(--midori-pale);
+  margin-top:20px;min-height:38px;padding:8px 18px;border-radius:var(--r);
+  font-size:13px;letter-spacing:.08em;color:var(--green);
+  background:var(--surface);border:1px solid var(--line);
 }
-.musubi button:hover{background:var(--washi-2);border-color:var(--midori-mid)}
 
-/* ---------- 詳細 ---------- */
+/* ============ 詳細・使い方 ============ */
 .scrim{
-  position:fixed;inset:0;z-index:60;background:rgba(14,20,15,.55);
+  position:fixed;inset:0;z-index:60;background:rgba(43,42,38,.55);
   display:flex;align-items:flex-end;justify-content:center;
-  padding-top:calc(60px + env(safe-area-inset-top,0px));
-  animation:fade .18s ease;
+  padding-top:calc(64px + env(safe-area-inset-top,0px));
 }
-@media (min-width:760px){.scrim{align-items:center;padding:34px 30px}}
-@keyframes fade{from{opacity:0}to{opacity:1}}
+@media (min-width:760px){.scrim{align-items:center;padding:40px 24px}}
 .sheet{
-  background:var(--washi);width:100%;max-width:700px;
+  background:var(--bg);width:100%;max-width:720px;
   max-height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;
-  border:1px solid var(--midori-pale);border-top:3px solid var(--midori);
-  animation:rise .2s cubic-bezier(.2,.7,.3,1);
+  border:1px solid var(--line);border-radius:8px 8px 0 0;
 }
-@keyframes rise{from{transform:translateY(16px)}to{transform:none}}
-@media (prefers-reduced-motion:reduce){.scrim,.sheet{animation:none}.fuda:hover{background:var(--panel)}}
+@media (min-width:760px){.sheet{border-radius:8px}}
 .sheet-top{
-  position:sticky;top:0;z-index:2;background:var(--washi);
-  padding:13px 20px 11px;border-bottom:1px solid var(--midori-pale);
-  display:flex;align-items:center;gap:11px;
+  position:sticky;top:0;z-index:2;background:var(--bg);
+  padding:14px 20px 12px;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:12px;
 }
-.sheet-top .gn{font-size:11px;letter-spacing:.18em;color:var(--midori)}
+.sheet-top .gn{font-size:12px;letter-spacing:.16em;color:var(--green-2)}
 .sheet-top .x{
   margin-left:auto;display:flex;align-items:center;justify-content:center;
   min-width:40px;min-height:40px;margin-right:-8px;
-  font-size:20px;line-height:1;color:var(--sumi-dim);
-  border:1px solid transparent;
+  font-size:20px;line-height:1;color:var(--ink-sub);
 }
-.sheet-top .x:hover{color:var(--midori);border-color:var(--midori-pale)}
-.sheet-body{padding:20px 22px 28px}
+.sheet-body{padding:24px 20px 32px}
 .sheet-body h1{
-  font-family:var(--serif);font-weight:700;font-size:21px;letter-spacing:.05em;
-  line-height:1.75;color:var(--midori);padding-bottom:13px;border-bottom:1px solid var(--hair);margin-bottom:18px;
+  font-size:22px;letter-spacing:.06em;line-height:1.7;color:var(--green);
+  padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:24px;
 }
-.doc{font-size:14.5px;line-height:1.95;color:var(--sumi)}
+
+.doc{font-size:16px;line-height:1.8;color:var(--ink)}
 .doc h3{
-  font-family:var(--serif);font-weight:700;font-size:15.5px;letter-spacing:.06em;color:var(--midori);
-  margin:26px 0 8px;padding-left:13px;border-left:3px solid var(--midori);
+  font-size:17px;letter-spacing:.08em;color:var(--green);
+  margin:32px 0 10px;padding-left:12px;border-left:3px solid var(--green);
 }
-.doc h3:first-child{margin-top:2px}
-.doc p{margin:0 0 13px}
-.doc ol{margin:0 0 13px;padding-left:1.4em}
-.doc ul{margin:0 0 13px;padding:0;list-style:none}
-.doc ul li{position:relative;padding-left:18px;margin-bottom:2px}
-.doc ul li::before{content:"";position:absolute;left:2px;top:15px;width:8px;height:1px;background:var(--midori-mid)}
-.doc ol li{margin-bottom:2px}
-.doc strong{font-weight:700;color:var(--kin)}
-.shots{display:flex;flex-direction:column;gap:12px;margin:16px 0}
-.shots img{width:100%;display:block;border:1px solid var(--midori-pale)}
+.doc h3:first-child{margin-top:4px}
+.doc p{margin:0 0 16px}
+.doc ol{margin:0 0 16px;padding-left:1.5em}
+.doc ul{margin:0 0 16px;padding:0;list-style:none}
+.doc ul li{position:relative;padding-left:18px;margin-bottom:4px}
+.doc ul li::before{content:"";position:absolute;left:2px;top:14px;width:8px;height:1px;background:var(--green-2)}
+.doc ol li{margin-bottom:4px}
+.doc strong{font-weight:700;color:var(--accent)}
+.shots{display:flex;flex-direction:column;gap:14px;margin:20px 0}
+.shots img{width:100%;display:block;border:1px solid var(--line);border-radius:var(--r)}
 .metabar{
   display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;
-  margin-top:22px;padding-top:14px;border-top:1px solid var(--midori-pale);
-  font-size:11px;letter-spacing:.1em;color:var(--sumi-dim);
+  margin-top:28px;padding-top:16px;border-top:1px solid var(--line);
+  font-size:12px;letter-spacing:.08em;color:var(--ink-sub);
 }
-.acts{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}
-
-/* ---------- ボタン ---------- */
-.btn{
-  padding:9px 17px;font-size:13px;letter-spacing:.08em;
-  border:1px solid var(--midori-pale);background:var(--panel);color:var(--sumi);
-  transition:background .15s,border-color .15s;
-}
-.btn:hover{border-color:var(--midori-mid)}
-.btn.primary{background:var(--midori);border-color:var(--midori);color:var(--on-midori)}
-.btn.primary:hover{filter:brightness(1.12)}
-.btn.ghost{background:transparent}
-.btn.warn{color:var(--shu);background:transparent;border-color:transparent}
-.btn.danger{background:var(--shu);border-color:var(--shu);color:var(--on-midori)}
-.btn:disabled{opacity:.45;cursor:not-allowed}
-
-.delbox{
-  margin-top:14px;padding:14px 16px;border:1px solid var(--shu);background:var(--shu-soft);
-  display:flex;flex-wrap:wrap;gap:10px;align-items:center;
-}
-.delbox .dl{width:100%;font-size:12.5px;letter-spacing:.06em;color:var(--sumi)}
-.delbox input.pass{
-  width:108px;padding:8px 10px;border:1px solid var(--midori-pale);background:var(--panel);
-  text-align:center;letter-spacing:.34em;font-size:16px;font-variant-numeric:tabular-nums;
-}
-.delbox .err{width:100%;font-size:12.5px;color:var(--shu);letter-spacing:.04em}
+.acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
 
 .chui{
-  margin:16px 0;padding:13px 16px;
-  border:1px solid var(--shu);border-left-width:3px;background:var(--shu-soft);
+  margin:24px 0;padding:16px 18px;border-radius:var(--r);
+  border:1px solid var(--line);border-left:3px solid var(--accent);background:var(--surface);
 }
 .chui .h{
-  display:block;font-family:var(--serif);font-weight:700;font-size:14px;
-  letter-spacing:.08em;color:var(--shu);margin-bottom:5px;
+  display:block;font-family:var(--serif);font-weight:700;font-size:16px;
+  letter-spacing:.06em;color:var(--accent);margin-bottom:6px;
 }
-.chui p{margin:0;font-size:13.5px;line-height:1.9}
-.tejun{margin:0 0 13px;padding-left:1.5em}
-.tejun li{margin-bottom:4px}
+.chui p{margin:0;font-size:15px;line-height:1.8}
+.tejun{margin:0 0 16px;padding-left:1.6em}
+.tejun li{margin-bottom:6px}
 .kbd{
-  display:inline-block;padding:1px 7px;font-size:12.5px;
-  background:var(--washi-2);border:1px solid var(--midori-pale);color:var(--midori);
+  display:inline-block;padding:1px 8px;border-radius:4px;font-size:13px;
+  background:var(--bg);border:1px solid var(--line);color:var(--green);
 }
 
-/* ---------- 記帳（登録） ---------- */
-.form{max-width:680px;margin:26px auto 0;display:flex;flex-direction:column;gap:26px}
-.field{display:flex;flex-direction:column;gap:8px}
-.field > label{font-size:10.5px;letter-spacing:.22em;color:var(--sumi-dim)}
-.field > label .nm{letter-spacing:.06em}
-.hint{font-size:11.5px;line-height:1.8;color:var(--sumi-dim);margin:0}
+/* ============ ボタン ============ */
+.btn{
+  padding:10px 18px;border-radius:var(--r);font-size:14px;letter-spacing:.06em;
+  border:1px solid var(--line);background:var(--surface);color:var(--ink);
+}
+.btn.primary{background:var(--green);border-color:var(--green);color:var(--bg);font-weight:700}
+.btn.ghost{background:transparent}
+.btn.danger{background:var(--accent);border-color:var(--accent);color:var(--bg);font-weight:700}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.small{flex:none;min-height:38px;padding:8px 16px;font-size:13px}
+
+/* 編集・削除は幹部のみ。帖尻に控えめに */
+.shobun{
+  display:flex;justify-content:flex-end;align-items:center;gap:6px;
+  margin-top:24px;padding-top:14px;border-top:1px solid var(--line);
+}
+.shobun button{
+  display:inline-flex;align-items:center;gap:7px;min-height:38px;padding:8px 10px;
+  font-size:13px;letter-spacing:.08em;color:var(--ink-sub);
+}
+.shobun .lock{
+  font-size:11px;letter-spacing:.06em;padding:1px 6px;border-radius:4px;
+  border:1px solid var(--line);color:var(--ink-sub);
+}
+.pop-scrim{
+  position:fixed;inset:0;z-index:80;background:rgba(43,42,38,.45);
+  display:flex;align-items:center;justify-content:center;padding:24px;
+}
+.pop{
+  width:100%;max-width:360px;background:var(--bg);
+  border:1px solid var(--line);border-radius:8px;padding:22px 22px 18px;
+}
+.pop-h{
+  font-family:var(--serif);font-weight:700;font-size:18px;letter-spacing:.06em;color:var(--ink);
+  padding-bottom:10px;margin-bottom:12px;border-bottom:1px solid var(--line);
+}
+.pop-d{font-size:15px;line-height:1.8;color:var(--ink-sub)}
+.pop .pass{
+  display:block;width:100%;margin-top:16px;min-height:46px;padding:8px 12px;
+  border:1px solid var(--line);background:var(--surface);
+  text-align:center;letter-spacing:.4em;font-size:18px;font-variant-numeric:tabular-nums;
+}
+.pop .pass:focus{border-color:var(--green-2);outline:none}
+.pop-err{margin-top:10px;font-size:14px;color:var(--accent)}
+.pop-acts{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}
+
+/* ============ 記帳 ============ */
+.form{max-width:720px;margin:32px auto 0;display:flex;flex-direction:column;gap:32px}
+.field{display:flex;flex-direction:column;gap:10px}
+.field > label{font-size:13px;letter-spacing:.18em;color:var(--ink-sub)}
+.field > label .nm{letter-spacing:.04em}
+.hint{font-size:13px;line-height:1.8;color:var(--ink-sub);margin:0}
 .ctl{
-  width:100%;padding:11px 13px;border:1px solid var(--midori-pale);
-  background:var(--panel);font-size:15px;letter-spacing:.03em;
+  width:100%;padding:12px 14px;border:1px solid var(--line);
+  background:var(--surface);font-size:16px;letter-spacing:.02em;
 }
-.ctl:focus{border-color:var(--midori);outline:none}
-textarea.ctl{min-height:250px;line-height:1.95;resize:vertical;font-size:14.5px}
-.genre-picks{display:flex;flex-wrap:wrap;gap:6px}
-.addrow{display:flex;gap:8px;align-items:stretch;flex-wrap:wrap}
+.ctl:focus{border-color:var(--green-2);outline:none}
+textarea.ctl{min-height:260px;line-height:1.8;resize:vertical}
+.genre-picks{display:flex;flex-wrap:wrap;gap:8px}
+.addrow{display:flex;gap:10px;align-items:stretch;flex-wrap:wrap}
 .tagadd{
-  flex:1 1 150px;max-width:230px;min-height:36px;padding:7px 11px;
-  font-size:14px;letter-spacing:.04em;
-  border:1px dashed var(--midori-pale);background:var(--panel);color:var(--sumi);
+  flex:1 1 160px;max-width:240px;min-height:38px;padding:8px 12px;
+  font-size:15px;letter-spacing:.02em;
+  border:1px dashed var(--line);background:var(--surface);color:var(--ink);
 }
-.tagadd:focus{border-style:solid;border-color:var(--midori);outline:none}
-.btn.small{flex:none;min-height:36px;padding:6px 16px;font-size:12.5px;letter-spacing:.08em}
-.tagedit{display:flex;flex-wrap:wrap;gap:6px;align-items:center;min-height:30px}
-.tagedit .t{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;padding:2px 5px 2px 9px;background:var(--kin-soft);color:var(--kin)}
-.tagedit .t.auto{background:var(--washi-2);color:var(--midori)}
-.tagedit .t button{color:inherit;opacity:.5;font-size:14px;line-height:1;padding:0 2px}
-.tagedit .t button:hover{opacity:1}
-.tagedit .none{font-size:12.5px;color:var(--sumi-dim)}
-.thumbs{display:flex;flex-wrap:wrap;gap:9px}
-.thumb{position:relative;width:98px;height:98px;overflow:hidden;border:1px solid var(--midori-pale)}
+.tagadd:focus{border-style:solid;border-color:var(--green-2);outline:none}
+.tagedit{display:flex;flex-wrap:wrap;gap:7px;align-items:center;min-height:32px}
+.tagedit .t{
+  display:inline-flex;align-items:center;gap:6px;font-size:13px;padding:3px 6px 3px 10px;
+  border-radius:4px;background:var(--surface);border:1px solid var(--line);color:var(--ink-sub);
+}
+.tagedit .t.auto{color:var(--green);border-color:var(--green-2)}
+.tagedit .t button{color:inherit;font-size:15px;line-height:1;padding:0 2px;border-radius:0}
+.tagedit .none{font-size:14px;color:var(--ink-sub)}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px}
+.thumb{position:relative;width:100px;height:100px;overflow:hidden;border:1px solid var(--line);border-radius:var(--r)}
 .thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.thumb button{position:absolute;top:0;right:0;width:24px;height:24px;background:var(--midori);color:var(--on-midori);font-size:13px;line-height:24px;text-align:center;padding:0}
-.drop{display:block;border:1px dashed var(--midori-pale);background:var(--panel);padding:16px;text-align:center;font-size:12.5px;letter-spacing:.06em;color:var(--sumi-dim);cursor:pointer}
-.preview{border:1px solid var(--midori-pale);border-top:2px solid var(--midori);background:var(--panel);padding:18px 20px}
-.preview .pv-h{font-size:10.5px;letter-spacing:.22em;color:var(--sumi-dim);margin:0 0 12px}
-.formbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding-top:14px;border-top:1px solid var(--midori-pale)}
-.formbar .msg{font-size:12.5px;color:var(--sumi-dim);letter-spacing:.04em}
-.formbar .msg.err{color:var(--shu)}
+.thumb button{
+  position:absolute;top:0;right:0;width:26px;height:26px;border-radius:0 var(--r) 0 var(--r);
+  background:var(--green);color:var(--bg);font-size:14px;line-height:26px;text-align:center;padding:0;
+}
+.drop{
+  display:block;border:1px dashed var(--line);border-radius:var(--r);background:var(--surface);
+  padding:18px;text-align:center;font-size:14px;letter-spacing:.04em;color:var(--ink-sub);cursor:pointer;
+}
+.preview{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);padding:20px 22px}
+.preview .pv-h{font-size:13px;letter-spacing:.2em;color:var(--ink-sub);margin:0 0 14px}
+.formbar{display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding-top:16px;border-top:1px solid var(--line)}
+.formbar .msg{font-size:14px;color:var(--ink-sub);letter-spacing:.02em}
+.formbar .msg.err{color:var(--accent)}
 
 .toast{
   position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:90;
-  background:var(--midori);color:var(--on-midori);padding:9px 20px;
-  font-size:12.5px;letter-spacing:.1em;
+  background:var(--green);color:var(--bg);padding:10px 22px;border-radius:var(--r);
+  font-size:14px;letter-spacing:.08em;
 }
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 </style>
@@ -419,33 +376,25 @@ textarea.ctl{min-height:250px;line-height:1.95;resize:vertical;font-size:14.5px}
   <!-- ============ 閲覧 ============ -->
   <section id="viewBrowse">
     <div class="sagasu">
-      <svg class="mag" width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M12.8 12.8 L17.5 17.5"/></svg>
+      <svg class="mag" width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M12.8 12.8 L17.5 17.5"/></svg>
       <input id="q" type="search" placeholder="身代金／迎撃／士気 …" aria-label="キーワード検索">
       <button class="clr" id="qclr" aria-label="検索条件をすべて解除" hidden>×</button>
     </div>
 
-    <div class="chiprow kohaba" id="chips" role="group" aria-label="ジャンル絞り込み"></div>
+    <div class="chiprow" id="chips" role="group" aria-label="ジャンル絞り込み"></div>
     <div class="tagline" id="tagline"></div>
 
-    <div class="cols">
-      <aside class="mokuji">
-        <h2>目次</h2>
-        <div class="mokuji-list" id="idxList"></div>
-      </aside>
-      <main>
-        <div class="kensuu">
-          <b id="rcount">—</b><span id="rlabel">件</span>
-          <span class="rule"></span>
-          <button class="mini" id="reload" hidden>更新</button>
-          <button class="mini" id="exportAll">表示中を一括コピー</button>
-        </div>
-        <div id="results"></div>
-        <div class="musubi">
-          <p class="l1">兵 法 帖</p>
-          <p class="l2" id="musubi2"></p>
-          <button id="helpBtn2" type="button">つかいかたを見る</button>
-        </div>
-      </main>
+    <div class="kensuu">
+      <b id="rcount">—</b><span id="rlabel">件</span>
+      <span class="rule"></span>
+      <button class="mini" id="reload" hidden>更新</button>
+      <button class="mini" id="exportAll">一括コピー</button>
+    </div>
+    <div id="results"></div>
+    <div class="musubi">
+      <p class="l1">兵 法 帖</p>
+      <p class="l2" id="musubi2"></p>
+      <button id="helpBtn2" type="button">つかいかたを見る</button>
     </div>
   </section>
 
@@ -492,7 +441,7 @@ textarea.ctl{min-height:250px;line-height:1.95;resize:vertical;font-size:14.5px}
         <input id="fImg" type="file" accept="image/*" multiple class="sr">
       </div>
 
-      <div class="field" style="max-width:280px">
+      <div class="field" style="max-width:300px">
         <label for="fAuthor">記帳者（任意）</label>
         <input class="ctl" id="fAuthor" placeholder="隊長" autocomplete="off">
       </div>
@@ -650,6 +599,7 @@ function autoTags(title, body, genre) {
 /* ================= 通信 ================= */
 const state = {
   mode: "local",
+  pass: null,                 /* 幹部として確認できたらここに入ります（この画面を開いている間だけ） */
   tips: [], genres: DEFAULT_GENRES.slice(),
   q: "", genre: null, tags: new Set(),
   editing: null, form: { images: [], removedAuto: new Set(), manual: [] }
@@ -697,10 +647,18 @@ const store = {
     renderAll();
   },
 
-  /* images: 既存は画像ID、新規は data:... の文字列 */
+  /* 幹部かどうかの確認。合っていればこの画面を開いている間だけ覚えます。 */
+  async auth(pass) {
+    if (state.mode === "sheet") await apiPost({ action: "auth", pass });
+    else if (pass !== LOCAL_PASS) throw apiErr({ code: "bad_pass", error: "パスコードが違います" });
+    state.pass = pass;
+  },
+
+  /* images: 既存は画像ID、新規は data:... の文字列
+     既にある項目の書き換え（編集）は、サーバー側で幹部パスコードを照合します。 */
   async saveTip(tip, images) {
     if (state.mode === "sheet") {
-      await apiPost({ action: "save", tip, images });
+      await apiPost({ action: "save", tip, images, pass: state.pass });
     } else {
       const ids = [];
       const map = lsRead(LS_IMGS, {});
@@ -716,11 +674,11 @@ const store = {
     await store.refresh();
   },
 
-  async deleteTip(tip, pass) {
+  async deleteTip(tip) {
     if (state.mode === "sheet") {
-      await apiPost({ action: "delete", id: tip.id, pass });
+      await apiPost({ action: "delete", id: tip.id, pass: state.pass });
     } else {
-      if (pass !== LOCAL_PASS) throw apiErr({ code: "bad_pass", error: "パスコードが違います" });
+      if (state.pass !== LOCAL_PASS) throw apiErr({ code: "bad_pass", error: "パスコードが違います" });
       lsWrite(LS_TIPS, lsRead(LS_TIPS, []).filter(t => t.id !== tip.id));
       const map = lsRead(LS_IMGS, {});
       for (const id of (tip.images || [])) delete map[id];
@@ -784,16 +742,6 @@ function renderChips() {
   box.appendChild(mk("すべて", null, state.tips.length));
   for (const [g, n] of counts) box.appendChild(mk(g, g, n));
 
-  const idx = $("#idxList"); idx.innerHTML = "";
-  const mkI = (label, val, n) => {
-    const b = el("button"); b.type = "button";
-    b.setAttribute("aria-pressed", String(state.genre === val));
-    b.innerHTML = `<span>${esc(label)}</span><span class="n">${n}</span>`;
-    b.onclick = () => { state.genre = state.genre === val ? null : val; renderAll(); };
-    return b;
-  };
-  idx.appendChild(mkI("すべて", null, state.tips.length));
-  for (const [g, n] of counts) idx.appendChild(mkI(g, g, n));
 }
 
 function renderTagline() {
@@ -910,6 +858,68 @@ function mountPanel(scrim, sheet) {
   return close;
 }
 
+/* ================= 確認の窓 =================
+   編集・削除を押したときにだけ、画面中央に小さな窓を出します。
+   開いた直後の幽霊タップで閉じないよう、覆いと同じ守りを入れています。 */
+function openPop(o) {
+  const scrim = el("div", "pop-scrim");
+  const pop = el("div", "pop");
+  pop.setAttribute("role", "alertdialog");
+  pop.setAttribute("aria-modal", "true");
+  pop.innerHTML =
+    `<p class="pop-h">${esc(o.title)}</p>` +
+    `<p class="pop-d">${esc(o.desc)}</p>` +
+    (o.needPass ? `<input class="pass" type="password" inputmode="numeric" autocomplete="off" maxlength="12" aria-label="幹部パスコード">` : "") +
+    `<p class="pop-err" hidden></p>` +
+    `<div class="pop-acts">` +
+      `<button type="button" class="btn ghost" data-a="no">やめる</button>` +
+      `<button type="button" class="btn ${o.okClass}" data-a="ok">${esc(o.okLabel)}</button>` +
+    `</div>`;
+  scrim.appendChild(pop);
+  document.body.appendChild(scrim);
+
+  const onKey = e => { if (e.key === "Escape") { e.stopPropagation(); close(); } };
+  function close() { scrim.remove(); document.removeEventListener("keydown", onKey, true); }
+  document.addEventListener("keydown", onKey, true);
+
+  const openedAt = Date.now();
+  let downOnScrim = false;
+  ["pointerdown", "mousedown", "touchstart"].forEach(ev => {
+    scrim.addEventListener(ev, e => { downOnScrim = (e.target === scrim); }, { passive: true });
+  });
+  scrim.addEventListener("click", e => {
+    if (e.target !== scrim || Date.now() - openedAt < 400 || !downOnScrim) return;
+    close();
+  });
+
+  const inp = pop.querySelector(".pass");
+  const err = pop.querySelector(".pop-err");
+  const ok  = pop.querySelector('[data-a="ok"]');
+  pop.querySelector('[data-a="no"]').onclick = close;
+
+  const run = async () => {
+    const v = inp ? inp.value.trim() : null;
+    if (inp && !v) { err.textContent = "パスコードを入力してください"; err.hidden = false; inp.focus(); return; }
+    ok.disabled = true; err.hidden = true;
+    try {
+      await o.onOk(v);
+      close();
+    } catch (e) {
+      console.error(e);
+      err.textContent = e.code === "bad_pass" ? "パスコードが違います" : o.failMsg + "（" + (e.code || "network") + "）";
+      err.hidden = false; ok.disabled = false;
+      if (inp) inp.select();
+    }
+  };
+  ok.onclick = run;
+  if (inp) {
+    inp.addEventListener("input", () => { err.hidden = true; });
+    inp.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); run(); } });
+    setTimeout(() => inp.focus(), 60);
+  }
+  return close;
+}
+
 /* ================= 使い方 ================= */
 function openPanel(label, bodyHtml) {
   const scrim = el("div", "scrim");
@@ -968,14 +978,14 @@ const HELP_HTML = `
 </ul>
 <p>書きながら下に仕上がりが出ます。整っていなくても大丈夫です、あとで直せます。</p>
 
-<h3>直す</h3>
-<p>自分が書いたものも、他の人が書いたものも、開いて <span class="kbd">編集</span> から直せます。
-誤字直し・追記・書き足しは気軽にどうぞ。</p>
+<h3>直す・消す</h3>
+<p>既に載っている項目の <strong>編集と削除は幹部のみ</strong> が行います。どちらもパスコードが要ります。</p>
 
 <div class="chui">
-<span class="h">消すときは幹部へ</span>
-<p>削除にはパスコードが要ります。<strong>消したい項目を見つけたら、自分で消さずに幹部まで連絡してください。</strong><br>
-内容が古くなっただけなら、消すより <span class="kbd">編集</span> で書き直してもらえると助かります。</p>
+<span class="h">直したい・消したいときは幹部へ</span>
+<p>誤字を見つけた、内容が古くなった、消したほうがよい ── そうしたときは
+<strong>自分で直さず、幹部まで連絡してください。</strong><br>
+新しく書き足すぶんには、パスコードは要りません。誰でも自由に記帳できます。</p>
 </div>
 
 <h3>そのほか</h3>
@@ -1008,15 +1018,10 @@ function openSheet(id) {
       `<div class="acts">` +
         `<button class="btn primary" data-a="copy">Discord用にコピー</button>` +
         `<button class="btn" data-a="dl">Markdownで保存</button>` +
-        `<button class="btn ghost" data-a="edit">編集</button>` +
-        `<button class="btn warn" data-a="del">削除</button>` +
       `</div>` +
-      `<div class="delbox" hidden>` +
-        `<span class="dl">この項目を削除します。パスコードを入力してください。</span>` +
-        `<input class="pass" type="password" inputmode="numeric" autocomplete="off" maxlength="12" aria-label="削除用パスコード">` +
-        `<button class="btn danger" data-a="delok">削除する</button>` +
-        `<button class="btn ghost" data-a="delno">やめる</button>` +
-        `<span class="err" hidden>パスコードが違います</span>` +
+      `<div class="shobun">` +
+        `<button data-a="edit" type="button">編集<span class="lock">幹部</span></button>` +
+        `<button data-a="del" type="button">削除<span class="lock">幹部</span></button>` +
       `</div>` +
     `</div>`;
   const close = mountPanel(scrim, sheet);
@@ -1042,38 +1047,32 @@ function openSheet(id) {
   sheet.querySelector('[data-a="dl"]').onclick = () => {
     downloadText(`${bare(t.title).replace(/[\\/:*?"<>|]/g, "")}.md`, discordText(t));
   };
-  sheet.querySelector('[data-a="edit"]').onclick = () => { close(); startEdit(t); };
-
-  const delBtn = sheet.querySelector('[data-a="del"]');
-  const box = sheet.querySelector(".delbox");
-  const pass = box.querySelector(".pass");
-  const err = box.querySelector(".err");
-  const okBtn = box.querySelector('[data-a="delok"]');
-
-  delBtn.onclick = () => {
-    box.hidden = false; delBtn.hidden = true; err.hidden = true;
-    pass.value = ""; pass.focus();
-    box.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  /* --- 編集・削除（幹部のみ）。押したときだけ確認の窓を出します --- */
+  const name = "【" + bare(t.title) + "】";
+  sheet.querySelector('[data-a="edit"]').onclick = () => {
+    if (state.pass) { close(); startEdit(t); return; }
+    openPop({
+      title: "編集は幹部のみです",
+      desc: name + " を編集します。幹部パスコードを入力してください。",
+      needPass: true, okLabel: "編集する", okClass: "primary", failMsg: "確認できませんでした",
+      onOk: async v => { await store.auth(v); close(); startEdit(t); }
+    });
   };
-  box.querySelector('[data-a="delno"]').onclick = () => { box.hidden = true; delBtn.hidden = false; };
-  pass.addEventListener("input", () => { err.hidden = true; });
-
-  const doDelete = async () => {
-    const v = pass.value.trim();
-    if (!v) { err.textContent = "パスコードを入力してください"; err.hidden = false; return; }
-    okBtn.disabled = true;
-    err.hidden = true;
-    try {
-      await store.deleteTip(t, v);
-      close(); toast("削除しました");
-    } catch (e) {
-      console.error(e);
-      err.textContent = e.code === "bad_pass" ? "パスコードが違います" : "削除できませんでした（" + (e.code || "network") + "）";
-      err.hidden = false; okBtn.disabled = false; pass.select();
-    }
+  sheet.querySelector('[data-a="del"]').onclick = () => {
+    const authed = !!state.pass;
+    openPop({
+      title: "項目を削除します",
+      desc: authed
+        ? name + " を一覧から削除します。よろしいですか。"
+        : name + " を一覧から削除します。幹部パスコードを入力してください。",
+      needPass: !authed, okLabel: "削除する", okClass: "danger", failMsg: "削除できませんでした",
+      onOk: async v => {
+        if (!state.pass) await store.auth(v);
+        await store.deleteTip(t);
+        close(); toast("削除しました");
+      }
+    });
   };
-  okBtn.onclick = doDelete;
-  pass.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); doDelete(); } });
 }
 
 /* ================= 記帳フォーム ================= */
@@ -1311,7 +1310,12 @@ $("#form").addEventListener("submit", async e => {
   } catch (err) {
     console.error("save failed", err);
     msg.className = "msg err";
-    msg.textContent = "保存できませんでした。通信を確かめて、もう一度お試しください。（" + (err.code || "network") + "）";
+    if (err.code === "bad_pass") {
+      state.pass = null;
+      msg.textContent = "編集の権限が確認できませんでした。一覧に戻って、もう一度「編集」から入り直してください。";
+    } else {
+      msg.textContent = "保存できませんでした。通信を確かめて、もう一度お試しください。（" + (err.code || "network") + "）";
+    }
   } finally { btn.disabled = false; }
 });
 
