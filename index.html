@@ -501,7 +501,7 @@ textarea.ctl{min-height:260px;line-height:1.8;resize:vertical}
    保存され、ほかの隊員には見えません。
    ============================================================ */
 
-const GAS_URL = "https://script.google.com/macros/s/AKfycbzeiZ0RhI5htd2I4qOO0MwZOA8M8wLUGIlf4Jfvbe5bBT7x4esu7xgwMYiP4eAAZVE/exec";
+const GAS_URL = "https://script.google.com/macros/s/AKfycbxCyJyq8Unuu6lZBkWtoiVgJUPX_87gO00v2TtanxURHDblI9GKvnzF6ks-Lqdo2oU/exec";
 
 /* スプレッドシートに接続していないときだけ使う削除パスコード。
    接続後の削除は Code.gs 側で照合するので、ここを見ても分かりません。 */
@@ -1082,7 +1082,7 @@ function openSheet(id) {
     const on = state.liked.has(t.id);
     likeBtn.setAttribute("aria-pressed", String(on));
     likeBtn.querySelector(".cnt").textContent = String(t.likes || 0);
-    likeHint.textContent = on ? "もう一度押すと取り消し" : "役に立ったらグッドを";
+    likeHint.textContent = on ? "参考になった（押すと取り消し）" : "参考になった";
   };
   paintLike();
   likeBtn.onclick = async () => {
@@ -1101,7 +1101,7 @@ function openSheet(id) {
       console.error(e);
       was ? state.liked.add(t.id) : state.liked.delete(t.id);
       t.likes = before; paintLike();
-      toast("送れませんでした。通信を確かめてください");
+      toast("送れませんでした（" + (e.code || "network") + "）");
     } finally { likeBtn.disabled = false; }
   };
 
