@@ -238,6 +238,24 @@ button.tag[aria-pressed="true"]{border-color:var(--green);color:var(--green);fon
 }
 .acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
 
+/* 参考になった */
+.sanko{display:flex;align-items:center;gap:12px;margin-top:24px}
+.sanko-btn{
+  display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:8px 18px;
+  border:1px solid var(--line);border-radius:var(--r);background:var(--surface);
+  font-size:15px;letter-spacing:.06em;color:var(--ink-sub);
+}
+.sanko-btn .cnt{
+  min-width:1.6em;padding-left:10px;border-left:1px solid var(--line);
+  font-family:var(--serif);font-weight:700;font-variant-numeric:tabular-nums;text-align:center;
+}
+/* 押した状態は塗らずに、深緑の太枠と文字色で示す（隣の「Discord用にコピー」と張り合わないように） */
+.sanko-btn[aria-pressed="true"]{border:2px solid var(--green);padding:7px 17px;color:var(--green);font-weight:700}
+.sanko-btn[aria-pressed="true"] .cnt{border-left-color:var(--green-2)}
+.sanko-btn:disabled{opacity:.6;cursor:default}
+.sanko .hint2{font-size:13px;color:var(--ink-sub)}
+.fuda .k .sk{margin-right:10px;color:var(--green-2)}
+
 .chui{
   margin:24px 0;padding:16px 18px;border-radius:var(--r);
   border:1px solid var(--line);border-left:3px solid var(--accent);background:var(--surface);
@@ -600,6 +618,7 @@ function autoTags(title, body, genre) {
 const state = {
   mode: "local",
   pass: null,                 /* 幹部として確認できたらここに入ります（この画面を開いている間だけ） */
+  liked: new Set((() => { try { return JSON.parse(localStorage.getItem("heihojo.liked") || "[]"); } catch { return []; } })()),
   tips: [], genres: DEFAULT_GENRES.slice(),
   q: "", genre: null, tags: new Set(),
   editing: null, form: { images: [], removedAuto: new Set(), manual: [] }
@@ -687,6 +706,21 @@ const store = {
     await store.refresh();
   },
 
+  /* 「参考になった」：delta は +1 か -1。戻り値は新しい数 */
+  async like(tip, delta) {
+    let n;
+    if (state.mode === "sheet") {
+      n = (await apiPost({ action: "like", id: tip.id, delta })).likes;
+    } else {
+      const all = lsRead(LS_TIPS, []);
+      const x = all.find(a => a.id === tip.id);
+      n = Math.max(0, ((x && x.likes) || 0) + delta);
+      if (x) { x.likes = n; lsWrite(LS_TIPS, all); }
+    }
+    tip.likes = n;
+    return n;
+  },
+
   async getImage(id) {
     if (imgCache.has(id)) return imgCache.get(id);
     let url = null;
@@ -762,7 +796,7 @@ function tipCard(t) {
   const c = el("button", "fuda"); c.type = "button";
   const tags = (t.tags || []).slice(0, 5).map(x => `<span class="tag">#${esc(x)}</span>`).join("");
   c.innerHTML =
-    `<div class="k"><span>${esc(t.genre)}</span><span class="meta">${esc(t.author || "")}${t.author ? " ・ " : ""}${fmtDate(t.updatedAt || t.createdAt)}</span></div>` +
+    `<div class="k"><span>${esc(t.genre)}</span><span class="meta">${(t.likes || 0) > 0 ? `<span class="sk">参考 ${t.likes}</span>` : ""}${esc(t.author || "")}${t.author ? " ・ " : ""}${fmtDate(t.updatedAt || t.createdAt)}</span></div>` +
     `<h3>【${esc(bare(t.title))}】</h3>` +
     `<p>${esc(snippet(t.body, 110))}</p>` +
     (tags ? `<div class="tags">${tags}</div>` : "") +
@@ -952,6 +986,7 @@ const HELP_HTML = `
 <h3>読む・持ち出す</h3>
 <ul>
 <li>札を押すと全文が開きます</li>
+<li><span class="kbd">参考になった</span> …… 役に立った項目に押してください。数が一覧の札にも出ます。もう一度押すと取り消せます</li>
 <li><span class="kbd">Discord用にコピー</span> …… そのままDiscordに貼れる形でコピーされます</li>
 <li><span class="kbd">Markdownで保存</span> …… ファイルとして手元に残せます</li>
 <li><span class="kbd">表示中を一括コピー</span> …… 絞り込んだ分をまとめて貼り出せます</li>
@@ -1015,6 +1050,7 @@ function openSheet(id) {
       `<div class="doc">${renderDoc(t.body)}</div>` +
       `<div class="metabar">${(t.tags||[]).map(x=>`<span class="tag">#${esc(x)}</span>`).join("")}` +
         `<span style="margin-left:auto">${esc(t.author||"名無し")} ・ ${fmtDate(t.createdAt)}${t.updatedAt && t.updatedAt !== t.createdAt ? "（更新 " + fmtDate(t.updatedAt) + "）" : ""}</span></div>` +
+      `<div class="sanko"><button type="button" class="sanko-btn" data-a="like"><span class="lbl">参考になった</span><span class="cnt"></span></button><span class="hint2"></span></div>` +
       `<div class="acts">` +
         `<button class="btn primary" data-a="copy">Discord用にコピー</button>` +
         `<button class="btn" data-a="dl">Markdownで保存</button>` +
@@ -1025,6 +1061,36 @@ function openSheet(id) {
       `</div>` +
     `</div>`;
   const close = mountPanel(scrim, sheet);
+
+  /* --- 参考になった --- */
+  const likeBtn = sheet.querySelector('[data-a="like"]');
+  const likeHint = sheet.querySelector(".sanko .hint2");
+  const paintLike = () => {
+    const on = state.liked.has(t.id);
+    likeBtn.setAttribute("aria-pressed", String(on));
+    likeBtn.querySelector(".cnt").textContent = String(t.likes || 0);
+    likeHint.textContent = on ? "もう一度押すと取り消せます" : "";
+  };
+  paintLike();
+  likeBtn.onclick = async () => {
+    const was = state.liked.has(t.id);
+    const delta = was ? -1 : 1;
+    const before = t.likes || 0;
+    /* 先に見た目を変え、失敗したら戻す */
+    was ? state.liked.delete(t.id) : state.liked.add(t.id);
+    t.likes = Math.max(0, before + delta);
+    paintLike(); likeBtn.disabled = true;
+    try {
+      await store.like(t, delta);
+      try { localStorage.setItem("heihojo.liked", JSON.stringify([...state.liked])); } catch {}
+      paintLike(); renderResults();
+    } catch (e) {
+      console.error(e);
+      was ? state.liked.add(t.id) : state.liked.delete(t.id);
+      t.likes = before; paintLike();
+      toast("送れませんでした。通信を確かめてください");
+    } finally { likeBtn.disabled = false; }
+  };
 
   const shots = sheet.querySelector(".shots");
   if ((t.images || []).length) {
